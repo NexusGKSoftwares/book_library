@@ -1,26 +1,28 @@
-<h1>Book Lending Library</h1>
-<%= link_to 'Add New Book', new_book_path, class: 'btn btn-primary' %>
+<div class="container mx-auto p-8">
+  <h1 class="text-3xl font-bold mb-4">Book Lending Library</h1>
+  <%= link_to 'Add New Book', new_book_path, class: 'bg-blue-500 text-white px-4 py-2 rounded-md' %>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Author</th>
-      <th>Status</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @books.each do |book| %>
-      <tr>
-        <td><%= link_to book.title, book_path(book) %></td>
-        <td><%= book.author %></td>
-        <td><%= book.status %></td>
-        <td>
-          <%= link_to 'Edit', edit_book_path(book), class: 'btn btn-warning btn-sm' %>
-          <%= link_to 'Delete', book_path(book), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' %>
-        </td>
+  <table class="w-full mt-4 border border-gray-300">
+    <thead>
+      <tr class="bg-gray-200">
+        <th class="p-2">Title</th>
+        <th class="p-2">Author</th>
+        <th class="p-2">Status</th>
+        <th class="p-2">Actions</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @books.each do |book| %>
+        <tr class="border-t border-gray-300">
+          <td class="p-2"><%= link_to book.title, book_path(book), class: "text-blue-600 underline" %></td>
+          <td class="p-2"><%= book.author %></td>
+          <td class="p-2"><%= book.status %></td>
+          <td class="p-2">
+            <%= link_to 'Edit', edit_book_path(book), class: 'bg-yellow-500 text-white px-3 py-1 rounded-md' %>
+            <%= link_to 'Delete', book_path(book), method: :delete, data: { confirm: 'Are you sure?' }, class: 'bg-red-500 text-white px-3 py-1 rounded-md' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
