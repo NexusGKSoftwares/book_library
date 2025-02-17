@@ -1,2 +1,14 @@
-<h1>Books#new</h1>
-<p>Find me in app/views/books/new.html.erb</p>
+# <div class="container mx-auto p-8">
+#   <h1 class="text-2xl font-bold">Borrow <%= @book.title %></h1>
+
+#   <%= form_with(model: @lending_history, url: book_lending_histories_path(@book), local: true, class: "mt-4") do |form| %>
+#     <div class="mb-4">
+#       <%= form.label :borrower_name, "Enter Your Name", class: "block font-bold mb-2" %>
+#       <%= form.text_field :borrower_name, class: "w-full p-2 border border-gray-300 rounded-md" %>
+#     </div>
+
+#     <%= form.submit "Borrow Book", class: "bg-green-500 text-white px-4 py-2 rounded-md" %>
+#   <% end %>
+
+#   <%= link_to 'Back to Book Details', book_path(@book), class: 'mt-4 block text-blue-500' %>
+# </div>
