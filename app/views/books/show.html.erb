@@ -1,22 +1,38 @@
-<h1><%= @book.title %></h1>
-<p><strong>Author:</strong> <%= @book.author %></p>
-<p><strong>Description:</strong> <%= @book.description %></p>
-<p><strong>Status:</strong> <%= @book.status %></p>
+<div class="container mx-auto p-8">
+  <h1 class="text-3xl font-bold mb-4"><%= @book.title %></h1>
+  <p><strong>Author:</strong> <%= @book.author %></p>
+  <p><strong>Description:</strong> <%= @book.description %></p>
+  <p><strong>Status:</strong> <span class="font-bold <%= @book.status == 'available' ? 'text-green-500' : 'text-red-500' %>"><%= @book.status %></span></p>
 
-<% if @book.status == "available" %>
-  <%= link_to 'Borrow this book', new_book_lending_history_path(@book) %>
-<% end %>
-
-<h2>Borrowing History</h2>
-<ul>
-  <% @book.lending_histories.each do |history| %>
-    <li>
-      Borrowed by: <%= history.borrower_name %> on <%= history.borrowed_at.strftime("%d-%m-%Y") %>
-      <% if history.returned_at %>
-        (Returned on: <%= history.returned_at.strftime("%d-%m-%Y") %>)
-      <% else %>
-        <%= link_to 'Return Book', return_book_lending_history_path(history), method: :patch %>
-      <% end %>
-    </li>
+  <% if @book.status == "available" %>
+    <%= link_to 'Borrow this Book', new_book_lending_history_path(@book), class: 'bg-green-500 text-white px-4 py-2 rounded-md' %>
   <% end %>
-</ul>
+
+  <h2 class="text-2xl mt-6">Borrowing History</h2>
+  <table class="w-full mt-4 border border-gray-300">
+    <thead>
+      <tr class="bg-gray-200">
+        <th class="p-2">Borrower</th>
+        <th class="p-2">Borrowed At</th>
+        <th class="p-2">Returned At</th>
+        <th class="p-2">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @book.lending_histories.each do |history| %>
+        <tr class="border-t border-gray-300">
+          <td class="p-2"><%= history.borrower_name %></td>
+          <td class="p-2"><%= history.borrowed_at.strftime("%d-%m-%Y") %></td>
+          <td class="p-2"><%= history.returned_at ? history.returned_at.strftime("%d-%m-%Y") : "Not Returned" %></td>
+          <td class="p-2">
+            <% if history.returned_at.nil? %>
+              <%= link_to 'Return Book', return_book_lending_history_path(history), method: :patch, class: 'bg-blue-500 text-white px-3 py-1 rounded-md' %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= link_to 'Back to Books', books_path, class: 'mt-4 bg-gray-500 text-white px-4 py-2 rounded-md' %>
+</div>
