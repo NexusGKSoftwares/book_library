@@ -1,2 +1,22 @@
-<h1>Books#show</h1>
-<p>Find me in app/views/books/show.html.erb</p>
+<h1><%= @book.title %></h1>
+<p><strong>Author:</strong> <%= @book.author %></p>
+<p><strong>Description:</strong> <%= @book.description %></p>
+<p><strong>Status:</strong> <%= @book.status %></p>
+
+<% if @book.status == "available" %>
+  <%= link_to 'Borrow this book', new_book_lending_history_path(@book) %>
+<% end %>
+
+<h2>Borrowing History</h2>
+<ul>
+  <% @book.lending_histories.each do |history| %>
+    <li>
+      Borrowed by: <%= history.borrower_name %> on <%= history.borrowed_at.strftime("%d-%m-%Y") %>
+      <% if history.returned_at %>
+        (Returned on: <%= history.returned_at.strftime("%d-%m-%Y") %>)
+      <% else %>
+        <%= link_to 'Return Book', return_book_lending_history_path(history), method: :patch %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
